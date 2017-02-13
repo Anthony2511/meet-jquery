@@ -4,16 +4,25 @@
 *
 * 13/02/2017
 */
-let $tabs;
+let iCurrentFigure = 0,
+    iFigureAmount,
+    aFigures;
+
+const fChangeFigure = function() {
+    aFigures[ iCurrentFigure ].classList.add( "hide" );
+    if ( ++iCurrentFigure === iFigureAmount ) {
+        iCurrentFigure = 0;
+    }// afficher la suivante
+    aFigures[ iCurrentFigure ].classList.remove( "hide" );
+};
 
 const fHandleTab = function( oEvent) { // element click
     oEvent.preventDefault();
     let $elt = oEvent.currentTarget; // récupérer lien courant
     // vérifier si lien active
-    if ( $elt.parentNode.classList.contains( "active" ) ) { // 4 méthodes ( add, remove, toggle, contain)
+    if ( $elt.parentNode.classList.contains( "active" ) ) { // classList : 4 méthodes ( add, remove, toggle, contain)
         return;
     }
-
     //remove class active from old active
     document.querySelector( "ul.nav.nav-tabs .active" ).classList.remove( "active" );
     // ajouter class active
@@ -36,4 +45,10 @@ window.addEventListener( "load", function() {
         $elt.addEventListener( "click", fHandleTab ); // si on déclare la function ici il va créer 4 functions pour le nombre de liens
     } );
 
+    // 3. trombinoscope
+    (aFigures = Array.from( document.querySelectorAll( "#trombino figure" ) ) ).forEach( function ( $elt, iIndex ) {
+        ( iIndex > 0 ) && $elt.classList.add( "hide" );// on masque
+    } );// masquer celui qui n'est pas premier
+    iFigureAmount = aFigures.length;
+    setInterval( fChangeFigure, 1000 ); // function appeler toutes les secondes
 } );
