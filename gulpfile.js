@@ -19,7 +19,7 @@ gulp.task( "js", function() {
 // --- Watch tasks
 
 gulp.task( "watch", function() {
-    gulp.watch( "/src/js/**/*.js", [ "js" ] );
+    gulp.watch( "src/js/**/*.js", [ "js" ] );
 } );
 
 // --- Aliases
